@@ -70,29 +70,6 @@ int	ft_atoi(const char *nptr)
 	return (num * sign);
 }
 
-int is_valid_number(char *str)
-{
-    int i;
-
-    i = 0;
-    if (!str || !str[0])
-        return (0);
-
-    if (str[i] == '+' || str[i] == '-')
-        i++;
-
-    if (!str[i]) // solo "+" o "-"
-        return (0);
-
-    while (str[i])
-    {
-        if (str[i] < '0' || str[i] > '9')
-            return (0);
-        i++;
-    }
-    return (1);
-}
-
 int is_duplicate(t_stack *stack, int n)
 {
     while (stack)
