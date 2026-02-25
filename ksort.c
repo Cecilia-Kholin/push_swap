@@ -12,6 +12,11 @@
 
 #include "push_swap.h"
 
+int	get_range(int len)
+{
+	if (len <= 100) return 16;
+		return 40;
+}
 void assign_indices_no_array(t_stack *a)
 {
     t_stack *current = a;
@@ -20,60 +25,105 @@ void assign_indices_no_array(t_stack *a)
 
     while (current)
     {
+		//comparamos el primero de current con todos los del tmp
         index = 0;
         tmp = a;
+		// 42  10  4
         while (tmp)
         {
+			//ejemplo 42 es menor que 42.... NO
+			//segunda: 10 es menor que 42..... SI
             if (tmp->value < current->value)
                 index++;
+			//como no es menor avanzamos al siguiente, 10
             tmp = tmp->next;
         }
+		//los numeros menores del temp
         current->index = index;
         current = current->next;
     }
 }
-
-int	max_bits(t_stack *a)
+void	push_to_b(t_stack **a, t_stack **b, int range)
 {
-	int max;
-	int bits;
+	int	i;
 
-	max = 0;
-	while (a)
+	i = 0;
+	while (*a)
 	{
-		if (a->index > max)
-			max = a->index;
-		a = a->next;
+		if ((*a)->index <= i)
+		{
+			move_pb(a, b);
+			move_rb(b);
+			i++;
+		}
+		else if ((*a)->index <= i + range)
+		{
+			move_pb(a, b);
+			i++;
+		}
+		else
+			move_ra(a);
 	}
-	bits = 0;
-	while ((max >> bits) != 0)
-		bits++;
-	return (bits);
 }
 
-void	ksort_radix(t_stack **a, t_stack **b)
+t_stack	*find_max(t_stack *stack)
 {
-	int bits;
-	int i;
-	int j;
-	int size;
+	int					max;
+	t_stack				*max_node;
 
-	bits = max_bits(*a);
-	i = 0;
-	while (i < bits)
+	if (!stack)
+		return (NULL);
+	max = stack->index;
+	max_node = stack;
+	while (stack)
 	{
-		size = stack_size(*a);
-		j = 0;
-		while (j < size)
+		if (stack->index > max)
 		{
-			if (((*a)->index >> i) & 1)
-				move_ra(a);      // bit = 1 => se queda en A (rota)
-			else
-				move_pb(a, b);   // bit = 0 => a B
-			j++;
+			max = stack->index;
+			max_node = stack;
 		}
-		while (*b)
-			move_pa(a, b);       // devolver todo a A
-		i++;
+		stack = stack->next;
+	}
+	return (max_node);
+}
+
+int	get_position(t_stack *stack, t_stack *objetive)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack)
+	{
+		if (stack == objetive)
+			return (pos);
+		pos++;
+		stack = stack->next;
+	}
+	return (pos);
+}
+
+
+void	push_to_a(t_stack **a, t_stack **b)
+{
+	t_stack	*max_node;
+	int				size;
+	int				pos;
+
+	while (*b)
+	{
+		size = stack_size(*b);
+		max_node = find_max(*b);
+		pos = get_position(*b, max_node);
+		if (pos <= size / 2)
+		{
+			while (*b != max_node)
+				move_rb(b);
+		}
+		else
+		{
+			while (*b != max_node)
+				move_rrb(b);
+		}
+		move_pa(a, b);
 	}
 }

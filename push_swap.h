@@ -58,9 +58,12 @@ int check_numerber(int argc, char **argv, t_stack **a);
 void	ft_putstr(char *s);
 void assign_indices_no_array(t_stack *a);
 int	max_bits(t_stack *a);
-void	ksort_radix(t_stack **a, t_stack **b);
+void	push_to_a(t_stack **a, t_stack **b);
+void	push_to_b(t_stack **a, t_stack **b, int range);
+int	get_range(int len);
 int	is_valid_number(const char *s);
 int	ft_isdigit(int c);
-
+t_stack	*find_max(t_stack *stack);
+int	get_position(t_stack *stack, t_stack *objetive);
 
 #endif

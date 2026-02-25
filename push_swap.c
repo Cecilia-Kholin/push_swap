@@ -12,6 +12,12 @@
 
 #include "push_swap.h"
 
+int error(void)
+{
+    write(2, "Error\n", 6);
+    return (1);
+}
+
 void sort_five(t_stack **a, t_stack **b)
 {
 	push_min_to_b(a, b);
@@ -163,7 +169,6 @@ int check_numerber(int argc, char **argv, t_stack **a)
 			return (0);
 
 		n = ft_atoi(argv[i]);
-
 		if (n < -2147483648L || n > 2147483647L)
 			return (0);
 
@@ -218,7 +223,8 @@ int	main(int argc, char **argv)
 	else if (size > 5)
 	{
 		assign_indices_no_array(stack_a);
-		ksort_radix(&stack_a, &stack_b); // K-Sort para >5 números
+		push_to_b(&stack_a, &stack_b, get_range(size));
+		push_to_a(&stack_a,  &stack_b);
 	}
-	
+	return (0);
 }
