@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_rotate.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maricamp <maricamp@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/11 11:48:22 by maricamp          #+#    #+#             */
+/*   Updated: 2026/02/11 12:00:11 by maricamp         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	rotate(s_stack **head)
+{
+	s_stack	*tail;
+
+	if (*head == NULL || (*head)->next == NULL)
+		return ;
+	tail = *head;
+	while (tail->next != NULL)
+		tail = tail->next;
+	tail->next = *head;
+	*head = (*head)->next;
+	tail->next->next = NULL;
+}
+
+void	rotate_a(s_stack **head)
+{
+	rotate(head);
+	write (1, "ra\n", 3);
+}
+
+void	rotate_b(s_stack **head)
+{
+	rotate(head);
+	write (1, "rb\n", 3);
+}
+
+void	rotate_ab(s_stack **stack_a, s_stack **stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	write(1, "rr\n", 3);
+}
