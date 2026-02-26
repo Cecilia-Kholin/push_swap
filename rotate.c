@@ -1,46 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_rotate.c                                      :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maricamp <maricamp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:48:22 by maricamp          #+#    #+#             */
-/*   Updated: 2026/02/11 12:00:11 by maricamp         ###   ########.fr       */
+/*   Created: 2026/02/12 11:42:37 by maricamp          #+#    #+#             */
+/*   Updated: 2026/02/26 15:46:19 by maricamp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rotate(s_stack **head)
+static void	rotate(t_stack **stack)
 {
-	s_stack	*tail;
+	t_stack	*tmp;
+	t_stack	*tail;
 
-	if (*head == NULL || (*head)->next == NULL)
+	if (!*stack || (*stack)->next == NULL)
 		return ;
-	tail = *head;
-	while (tail->next != NULL)
-		tail = tail->next;
-	tail->next = *head;
-	*head = (*head)->next;
-	tail->next->next = NULL;
+	tmp = *stack;
+	*stack = (*stack)->next;
+	tail = get_bottom(*stack);
+	tmp->next = NULL;
+	tail->next = tmp;
 }
 
-void	rotate_a(s_stack **head)
+void	move_ra(t_stack **stack_a)
 {
-	rotate(head);
-	write (1, "ra\n", 3);
+	rotate(stack_a);
+	ft_putstr("ra\n");
 }
 
-void	rotate_b(s_stack **head)
+void	move_rb(t_stack **stack_b)
 {
-	rotate(head);
-	write (1, "rb\n", 3);
+	rotate(stack_b);
+	ft_putstr("rb\n");
 }
 
-void	rotate_ab(s_stack **stack_a, s_stack **stack_b)
+void	move_rr(t_stack **stack_a, t_stack **stack_b)
 {
 	rotate(stack_a);
 	rotate(stack_b);
-	write(1, "rr\n", 3);
+	ft_putstr("rr\n");
 }
